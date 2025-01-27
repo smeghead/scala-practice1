@@ -19,4 +19,17 @@ object c_b_01 {
         ) yield Point(x, y)
         points.filter(p => exist(b, p))
     }
+
+    def countSquare(b: Board, p: Point): Int = {
+        val checker = for (
+            i <- 1 until Math.min(b.n - p.x, b.n - p.y)
+        ) yield {
+            exist(b, Point(p.x, p.y + i)) && exist(b, Point(p.x + i, p.y)) && exist(b, Point(p.x + i, p.y + i))
+        }
+        checker.filter(identity).length
+    }
+
+    def countAll(b: Board, points: IndexedSeq[Point]): Int = {
+        points.map(countSquare(b, _)).sum
+    }
 }

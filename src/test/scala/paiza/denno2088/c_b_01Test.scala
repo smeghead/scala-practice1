@@ -27,4 +27,56 @@ class c_b_01Test extends munit.FunSuite {
     assertEquals(points(0), c_b_01.Point(0, 0))
     assertEquals(points(1), c_b_01.Point(1, 1))
   }
+
+  test("1点からの探索 1点目") {
+    val board = c_b_01.createBoard(Array(".#.", "#.#", ".#."))
+
+    val points = c_b_01.startPoints(board)
+
+    assertEquals(c_b_01.countSquare(board, points(0)), 1)
+  }
+
+  test("1点からの探索 2点目") {
+    val board = c_b_01.createBoard(Array(".#.", "#.#", ".#."))
+
+    val points = c_b_01.startPoints(board)
+
+    assertEquals(c_b_01.countSquare(board, points(1)), 0)
+  }
+
+  test("答") {
+    val board = c_b_01.createBoard(Array(".#.", "#.#", ".#."))
+
+    val points = c_b_01.startPoints(board)
+
+    assertEquals(c_b_01.countAll(board, points), 1)
+  }
+
+  test("例題1") {
+    val board = c_b_01.createBoard(Array(
+      ".#.#.",
+      "#####",
+      ".#.#.",
+      "##.##",
+      ".###."
+    ))
+
+    val points = c_b_01.startPoints(board)
+
+    assertEquals(c_b_01.countAll(board, points), 3)
+  }
+
+  test("例題1") {
+    val board = c_b_01.createBoard(Array(
+      ".....",
+      ".....",
+      ".....",
+      ".....",
+      "....."
+    ))
+
+    val points = c_b_01.startPoints(board)
+
+    assertEquals(c_b_01.countAll(board, points), 30)
+  }
 }
