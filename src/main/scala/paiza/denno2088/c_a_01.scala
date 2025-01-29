@@ -32,6 +32,21 @@ object c_a_01 {
         }
     }
 
+    def getCells(b: Board): IndexedSeq[Cell] = {
+        val cells = for (
+            y <- 0 until b.matrix.length;
+            x <- 0 until b.matrix(0).length
+        ) yield b.matrix(y)(x)
+
+        cells.filter(_.isInstanceOf[Cell]).asInstanceOf[IndexedSeq[Cell]]
+    }
+
+    def getSmallestCell(b: Board): Cell = {
+        val cells = getCells(b)
+        val sorted = cells.sortBy(c => c.value)
+        sorted(0)
+    }
+
     def display(b: Board): String = {
         b.matrix.map[String](cells => {
             cells.map[String](c => {
@@ -45,6 +60,7 @@ object c_a_01 {
 
     def seek(b: Board): Board = {
         b
+        // val minValuePoint = 
         // val minValuePoint = for (
         //     x <- 0 until b.matrix(0).length;
         //     y <- 0 until b.matrix.length) yield

@@ -39,6 +39,17 @@ class c_a_01Test extends munit.FunSuite {
     assertEquals(c_a_01.display(board), "0****\n*#*#*\n****G")
   }
 
+  test("一番小さい値のCellを取得する") {
+    val board = c_a_01.createBoard(Array(
+      "A....",
+      ".#.#.",
+      "....B"
+    ))
+    val cell = c_a_01.getSmallestCell(board)
+
+    assertEquals(cell.p, c_a_01.Point(0, 0))
+  }
+
   // test("探索") {
   //   val board = c_a_01.createBoard(Array(
   //     "A....",
@@ -47,7 +58,7 @@ class c_a_01Test extends munit.FunSuite {
   //   ))
   //   val board2 = c_a_01.seek(board)
 
-  //   assertEquals(c_a_01.display(board2), "0****\n*#*#*\n****G")
+  //   assertEquals(c_a_01.display(board2), "01***\n1#*#*\n****G")
   //   assertEquals(c_a_01.getCell(board2, c_a_01.Point(0, 0)).map(_.fixed).getOrElse(false), true)
   // }
 }
