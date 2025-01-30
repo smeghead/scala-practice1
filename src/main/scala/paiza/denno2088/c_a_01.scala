@@ -101,7 +101,7 @@ object c_a_01 {
             getActiveCell(b, Point(p.x, p.y + 1)),
         )
 
-        cells.collect {case Some(cell) => cell}
+        cells.flatten
     }
 
     def seek(b: Board): Board = {
