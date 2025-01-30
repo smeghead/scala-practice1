@@ -10,16 +10,16 @@ class c_a_01Test extends munit.FunSuite {
       "....B"
     ))
 
-    assertEquals(c_a_01.getCell(board, c_a_01.Point(0, 0)), Some(c_a_01.Cell(c_a_01.Point(0, 0), 0, false, false)))
+    assertEquals(c_a_01.getCell(board, c_a_01.Point(0, 0)), Some(c_a_01.Cell(c_a_01.Point(0, 0), 0, true, false)))
     assertEquals(c_a_01.getCell(board, c_a_01.Point(1, 0)), Some(c_a_01.Cell(c_a_01.Point(1, 0), Int.MaxValue, false, false)))
     assertEquals(c_a_01.getCell(board, c_a_01.Point(2, 0)), Some(c_a_01.Cell(c_a_01.Point(2, 0), Int.MaxValue, false, false)))
     assertEquals(c_a_01.getCell(board, c_a_01.Point(3, 0)), Some(c_a_01.Cell(c_a_01.Point(3, 0), Int.MaxValue, false, false)))
     assertEquals(c_a_01.getCell(board, c_a_01.Point(4, 0)), Some(c_a_01.Cell(c_a_01.Point(4, 0), Int.MaxValue, false, false)))
 
     assertEquals(c_a_01.getCell(board, c_a_01.Point(0, 1)), Some(c_a_01.Cell(c_a_01.Point(0, 1), Int.MaxValue, false, false)))
-    assertEquals(c_a_01.getCell(board, c_a_01.Point(1, 1)), null)
+    assertEquals(c_a_01.getCell(board, c_a_01.Point(1, 1)), None)
     assertEquals(c_a_01.getCell(board, c_a_01.Point(2, 1)), Some(c_a_01.Cell(c_a_01.Point(2, 1), Int.MaxValue, false, false)))
-    assertEquals(c_a_01.getCell(board, c_a_01.Point(3, 1)), null)
+    assertEquals(c_a_01.getCell(board, c_a_01.Point(3, 1)), None)
     assertEquals(c_a_01.getCell(board, c_a_01.Point(4, 1)), Some(c_a_01.Cell(c_a_01.Point(4, 1), Int.MaxValue, false, false)))
 
     assertEquals(c_a_01.getCell(board, c_a_01.Point(0, 2)), Some(c_a_01.Cell(c_a_01.Point(0, 2), Int.MaxValue, false, false)))
@@ -47,7 +47,56 @@ class c_a_01Test extends munit.FunSuite {
     ))
     val cell = c_a_01.getSmallestCell(board)
 
-    assertEquals(cell.p, c_a_01.Point(0, 0))
+    assertEquals(cell.point, c_a_01.Point(0, 0))
+  }
+
+  test("指定したセルを確定させる") {
+    val board = c_a_01.createBoard(Array(
+      "A....",
+      ".#.#.",
+      "....B"
+    ))
+    val board2 = c_a_01.updateCell(board, c_a_01.Point(0, 0), c => c.copy(fixed = true))
+
+    assertEquals(c_a_01.display(board2), "0****\n*#*#*\n****G")
+    assertEquals(c_a_01.getCell(board2, c_a_01.Point(0, 0)).map(_.fixed).getOrElse(false), true)
+  }
+
+  test("指定したセルの値を更新する") {
+    val board = c_a_01.createBoard(Array(
+      "A....",
+      ".#.#.",
+      "....B"
+    ))
+    val board2 = c_a_01.updateCell(board, c_a_01.Point(1, 0), c => c.copy(value = 1))
+
+    assertEquals(c_a_01.display(board2), "01***\n*#*#*\n****G")
+    assertEquals(c_a_01.getCell(board2, c_a_01.Point(1, 0)).map(_.value).getOrElse(-1), 1)
+  }
+
+  test("未確定のうち一番小さい値のCellを取得する") {
+    val board = c_a_01.createBoard(Array(
+      "A....",
+      ".#.#.",
+      "....B"
+    ))
+    val board2 = c_a_01.updateCell(board, c_a_01.Point(1, 0), c => c.copy(value = 1))
+
+    val cell = c_a_01.getUnfixedSmallestCell(board2)
+
+    assertEquals(cell.point, c_a_01.Point(1, 0))
+  }
+
+  test("隣りあうCellを取得する 0 0") {
+    val board = c_a_01.createBoard(Array(
+      "A....",
+      ".#.#.",
+      "....B"
+    ))
+
+    val cells = c_a_01.getNeighborhoodCells(board, c_a_01.Point(0, 0))
+
+    assertEquals(cells(0).point, c_a_01.Point(1, 0))
   }
 
   // test("探索") {
