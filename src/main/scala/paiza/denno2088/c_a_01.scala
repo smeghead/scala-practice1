@@ -101,15 +101,11 @@ object c_a_01 {
             getActiveCell(b, Point(p.x, p.y + 1)),
         )
 
-        cells.flatMap {
-            case Some(cell) => Some(cell)
-            case _ => None
-        }
-        // cells.filter(_.isInstanceOf[Cell]).asInstanceOf[IndexedSeq[Cell]]
+        cells.collect {case Some(cell) => cell}
     }
 
     def seek(b: Board): Board = {
-        val smallCell = getUnfixedSmallestCell(b)
+        // val smallCell = getUnfixedSmallestCell(b)
 b        
     }
 }
