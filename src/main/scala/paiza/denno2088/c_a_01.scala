@@ -13,7 +13,7 @@ object c_a_01 {
                 line.split("").zipWithIndex.map {
                     case (c, x) => {
                         c match {
-                            case "A" => Cell(Point(x, y), 0, true, false)
+                            case "A" => Cell(Point(x, y), 0, false, false)
                             case "B" => Cell(Point(x, y), Int.MaxValue, false, true)
                             case "." => Cell(Point(x, y), Int.MaxValue, false, false)
                             case "#" => Wall()
@@ -38,7 +38,10 @@ object c_a_01 {
             x <- 0 until b.matrix(0).length
         ) yield b.matrix(y)(x)
 
-        cells.filter(_.isInstanceOf[Cell]).asInstanceOf[IndexedSeq[Cell]]
+        cells.collect {
+            case cell: Cell => Some(cell)
+            case wall: Wall => None
+        }.flatten
     }
 
     def getSmallestCell(b: Board): Cell = {
@@ -49,7 +52,7 @@ object c_a_01 {
 
     def getUnfixedSmallestCell(b: Board): Cell = {
         val cells = getCells(b)
-        val sorted = cells.sortBy(c => c.value).filter(_.fixed == false)
+        val sorted = cells.filter(_.fixed == false).sortBy(c => c.value)
         sorted(0)
     }
 
@@ -57,8 +60,8 @@ object c_a_01 {
         b.matrix.map[String](cells => {
             cells.map[String](c => {
                 c match {
-                    case c: Cell => if (c.isGoal) "G" else if (c.value == Int.MaxValue) "*" else c.value.toString()
-                    case _ => "#"
+                    case c: Cell => "%s%s ".format(if (c.isGoal) "G" else if (c.value == Int.MaxValue) "*" else c.value.toString(), if (c.fixed) "+" else "-")
+                    case _ => "## "
                 }
             }).mkString("")
         }).mkString("\n")
@@ -75,19 +78,13 @@ object c_a_01 {
     }
 
     def getActiveCell(b: Board, p: Point): Option[Cell] = {
-        val yLen = b.matrix.length
-        val xLen = b.matrix(0).length
+        val yRange = 0 until b.matrix.length
+        val xRange = 0 until b.matrix(0).length
 
-        if (p.x < 0) {
+        if ( ! xRange.contains(p.x)) {
             return None
         }
-        if (p.y < 0) {
-            return None
-        }
-        if (p.x > xLen) {
-            return None
-        }
-        if (p.y > yLen) {
+        if ( ! yRange.contains(p.y)) {
             return None
         }
         getCell(b, p)
@@ -105,7 +102,29 @@ object c_a_01 {
     }
 
     def seek(b: Board): Board = {
-        // val smallCell = getUnfixedSmallestCell(b)
-b        
+        val smallCell = getUnfixedSmallestCell(b)
+        val bFixed = updateCell(b, smallCell.point, c => c.copy(fixed = true))
+
+        val neighborCells = getNeighborhoodCells(bFixed, smallCell.point).filter(c => c.fixed == false)
+
+        neighborCells.foldLeft(bFixed) { (acc, c) => updateCell(acc, c.point, c => if (c.value > smallCell.value + 1) c.copy(value = smallCell.value + 1) else c)}
+    }
+
+    def allFixed(b: Board): Boolean = {
+        getCells(b).forall(_.fixed)
+    }
+
+    def start(lines: Array[String]): Int = {
+        var b = createBoard(lines)
+
+        def rec(b: Board): Int = {
+            println("")
+            println(display(b))
+            if (allFixed(b)) {
+                return 1
+            }
+            rec(seek(b))
+        }
+        rec(b)
     }
 }
