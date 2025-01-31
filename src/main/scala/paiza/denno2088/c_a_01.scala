@@ -5,7 +5,7 @@ object c_a_01 {
     case class Point(x: Int, y: Int)
     case class Cell(point: Point, value: Int, fixed: Boolean, isGoal: Boolean)
     case class Wall()
-    case class Board(n: Int, matrix: Array[Array[Cell | Wall]])
+    case class Board(matrix: Array[Array[Cell | Wall]])
 
     def createBoard(lines: Array[String]): Board = {
         val matrix = lines.zipWithIndex.map {
@@ -22,7 +22,27 @@ object c_a_01 {
                 }
             }
         }
-        Board(lines.length, matrix)
+        Board(matrix)
+    }
+
+    def spreadGoal(b: Board): Board = {
+        val goal = getCells(b).find(c => c.isGoal)
+
+        def visibleCells(b: Board, p: Point, moveFn : Point => Point): Board = {
+            val nextPoint = moveFn(p)
+            if (getActiveCell(b, nextPoint).isDefined) {
+                visibleCells(updateCell(b, nextPoint, c => c.copy(isGoal = true)), nextPoint, moveFn)
+            } else {
+                b
+            }
+        }
+        val moveFns: Array[Point => Point] = Array(
+            p => p.copy(y = p.y + 1),
+            p => p.copy(y = p.y - 1),
+            p => p.copy(x = p.x + 1),
+            p => p.copy(x = p.x - 1),
+        )
+        moveFns.foldLeft(b) { (acc, fn) => visibleCells(acc, goal.map(_.point).getOrElse(null), fn) }
     }
 
     def getCell(b: Board, p: Point): Option[Cell] = {
@@ -114,14 +134,23 @@ object c_a_01 {
         getCells(b).forall(_.fixed)
     }
 
+    def fixedGoal(b: Board): Option[Int] = {
+        val fixedGoalCell = getCells(b).find(c => c.fixed && c.isGoal)
+        fixedGoalCell.map(c => Some(c.value)).getOrElse(None)
+    }
+
     def start(lines: Array[String]): Int = {
-        var b = createBoard(lines)
+        var b = spreadGoal(createBoard(lines))
 
         def rec(b: Board): Int = {
             println("")
             println(display(b))
+            val answer = fixedGoal(b)
+            if (answer.isDefined) {
+                return answer.get
+            }
             if (allFixed(b)) {
-                return 1
+                return Int.MaxValue
             }
             rec(seek(b))
         }
