@@ -143,14 +143,14 @@ object c_a_01 {
         var b = spreadGoal(createBoard(lines))
 
         def rec(b: Board): Int = {
-            println("")
-            println(display(b))
+            // println("")
+            // println(display(b))
             val answer = fixedGoal(b)
             if (answer.isDefined) {
-                return answer.get
+                return if (answer.get == Int.MaxValue) -1 else answer.get
             }
             if (allFixed(b)) {
-                return Int.MaxValue
+                return -1
             }
             rec(seek(b))
         }
