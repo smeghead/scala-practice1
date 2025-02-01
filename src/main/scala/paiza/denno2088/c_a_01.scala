@@ -5,9 +5,9 @@ object c_a_01 {
     case class Point(x: Int, y: Int)
     case class Cell(point: Point, value: Int, fixed: Boolean, isGoal: Boolean)
     case class Wall()
-    case class Board(matrix: Array[Array[Cell | Wall]])
+    case class Board(matrix: Vector[Vector[Cell | Wall]])
 
-    def createBoard(lines: Array[String]): Board = {
+    def createBoard(lines: Vector[String]): Board = {
         val matrix = lines.zipWithIndex.map {
             case (line, y) => {
                 line.split("").zipWithIndex.map {
@@ -19,7 +19,7 @@ object c_a_01 {
                             case "#" => Wall()
                         }
                     }
-                }
+                }.toVector
             }
         }
         Board(matrix)
@@ -36,7 +36,7 @@ object c_a_01 {
                 b
             }
         }
-        val moveFns: Array[Point => Point] = Array(
+        val moveFns: Vector[Point => Point] = Vector(
             p => p.copy(y = p.y + 1),
             p => p.copy(y = p.y - 1),
             p => p.copy(x = p.x + 1),
@@ -52,7 +52,7 @@ object c_a_01 {
         }
     }
 
-    def getCells(b: Board): IndexedSeq[Cell] = {
+    def getCells(b: Board): Vector[Cell] = {
         val cells = for (
             y <- 0 until b.matrix.length;
             x <- 0 until b.matrix(0).length
@@ -61,7 +61,7 @@ object c_a_01 {
         cells.collect {
             case cell: Cell => Some(cell)
             case wall: Wall => None
-        }.flatten
+        }.flatten.toVector
     }
 
     def getSmallestCell(b: Board): Cell = {
@@ -80,7 +80,9 @@ object c_a_01 {
         b.matrix.map[String](cells => {
             cells.map[String](c => {
                 c match {
-                    case c: Cell => "%s%s ".format(if (c.isGoal) "G" else if (c.value == Int.MaxValue) "*" else c.value.toString(), if (c.fixed) "+" else "-")
+                    case c: Cell => "%s%s ".format(
+                        if (c.isGoal) "G" else if (c.value == Int.MaxValue) "*" else c.value.toString(),
+                        if (c.fixed) "+" else "-")
                     case _ => "## "
                 }
             }).mkString("")
@@ -111,14 +113,12 @@ object c_a_01 {
     }
     
     def getNeighborhoodCells(b: Board, p: Point): IndexedSeq[Cell] = {
-        val cells = IndexedSeq(
+        IndexedSeq(
             getActiveCell(b, Point(p.x - 1, p.y)),
             getActiveCell(b, Point(p.x + 1, p.y)),
             getActiveCell(b, Point(p.x, p.y - 1)),
             getActiveCell(b, Point(p.x, p.y + 1)),
-        )
-
-        cells.flatten
+        ).flatten
     }
 
     def seek(b: Board): Board = {
@@ -127,7 +127,9 @@ object c_a_01 {
 
         val neighborCells = getNeighborhoodCells(bFixed, smallCell.point).filter(c => c.fixed == false)
 
-        neighborCells.foldLeft(bFixed) { (acc, c) => updateCell(acc, c.point, c => if (c.value > smallCell.value + 1) c.copy(value = smallCell.value + 1) else c)}
+        neighborCells.foldLeft(bFixed) { (acc, c) => {
+            updateCell(acc, c.point, c => if (c.value > smallCell.value + 1) c.copy(value = smallCell.value + 1) else c)
+        }}
     }
 
     def allFixed(b: Board): Boolean = {
@@ -139,8 +141,8 @@ object c_a_01 {
         fixedGoalCell.map(c => Some(c.value)).getOrElse(None)
     }
 
-    def start(lines: Array[String]): Int = {
-        var b = spreadGoal(createBoard(lines))
+    def start(lines: Vector[String]): Int = {
+        val b = spreadGoal(createBoard(lines))
 
         def rec(b: Board): Int = {
             // println("")

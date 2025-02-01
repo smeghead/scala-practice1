@@ -4,7 +4,7 @@ import paiza.denno2088.c_a_01
 
 class c_a_01Test extends munit.FunSuite {
   test("面の初期化") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -30,7 +30,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("ゴールの拡張") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -58,7 +58,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("面の描画") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -68,7 +68,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("一番小さい値のCellを取得する") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -79,7 +79,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("指定したセルを確定させる") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -91,7 +91,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("指定したセルの値を更新する") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -103,7 +103,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("未確定のうち一番小さい値のCellを取得する") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -117,7 +117,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("隣りあうCellを取得する 0 0") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -129,7 +129,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("探索") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
@@ -142,7 +142,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("全て確定してない") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A.",
       ".B",
     ))
@@ -155,7 +155,7 @@ class c_a_01Test extends munit.FunSuite {
   }
 
   test("全て確定している") {
-    val board = c_a_01.createBoard(Array(
+    val board = c_a_01.createBoard(Vector(
       "A.",
       ".B",
     ))
@@ -166,5 +166,36 @@ class c_a_01Test extends munit.FunSuite {
     val b6 = c_a_01.updateCell(b5, c_a_01.Point(1, 1), c => c.copy(fixed = true))
 
     assertEquals(c_a_01.allFixed(b6), true)
+  }
+
+  test("例題1") {
+    val lines = Vector(
+      "A....",
+      ".#.#.",
+      "....B",
+    )
+    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
+
+    assertEquals(c_a_01.start(lines), 2)
+  }
+
+  test("例題2") {
+    val lines = Vector(
+      "A..B",
+      "####",
+    )
+    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
+
+    assertEquals(c_a_01.start(lines), 0)
+  }
+
+  test("例題3") {
+    val lines = Vector(
+      "A.#B",
+      "####",
+    )
+    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
+
+    assertEquals(c_a_01.start(lines), -1)
   }
 }
