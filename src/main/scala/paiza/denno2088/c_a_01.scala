@@ -64,16 +64,11 @@ object c_a_01 {
         }.flatten.toVector
     }
 
-    def getSmallestCell(b: Board): Cell = {
-        val cells = getCells(b)
-        val sorted = cells.sortBy(c => c.value)
-        sorted(0)
-    }
-
-    def getUnfixedSmallestCell(b: Board): Cell = {
+    def getUnfixedSmallestCell(b: Board): Option[Cell] = {
         val cells = getCells(b)
         val sorted = cells.filter(_.fixed == false).sortBy(c => c.value)
-        sorted(0)
+        val smallest = sorted(0)
+        if (smallest.value == Int.MaxValue) None else Some(smallest)
     }
 
     def display(b: Board): String = {
@@ -122,7 +117,11 @@ object c_a_01 {
     }
 
     def seek(b: Board): Board = {
-        val smallCell = getUnfixedSmallestCell(b)
+        val smallCellOption = getUnfixedSmallestCell(b)
+        if (smallCellOption.isEmpty) {
+            return b
+        }
+        val smallCell = smallCellOption.get
         val bFixed = updateCell(b, smallCell.point, c => c.copy(fixed = true))
 
         val neighborCells = getNeighborhoodCells(bFixed, smallCell.point).filter(c => c.fixed == false)
@@ -147,6 +146,10 @@ object c_a_01 {
         def rec(b: Board): Int = {
             // println("")
             // println(display(b))
+            val smallCellOption = getUnfixedSmallestCell(b)
+            if (smallCellOption.isEmpty) {
+                return -1
+            }
             val answer = fixedGoal(b)
             if (answer.isDefined) {
                 return if (answer.get == Int.MaxValue) -1 else answer.get

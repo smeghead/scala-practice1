@@ -67,16 +67,16 @@ class c_a_01Test extends munit.FunSuite {
     assertEquals(c_a_01.display(board), "0- *- *- *- *- \n*- ## *- ## *- \n*- *- *- *- G- ")
   }
 
-  test("一番小さい値のCellを取得する") {
-    val board = c_a_01.createBoard(Vector(
-      "A....",
-      ".#.#.",
-      "....B"
-    ))
-    val cell = c_a_01.getSmallestCell(board)
+  // test("一番小さい値のCellを取得する") {
+  //   val board = c_a_01.createBoard(Vector(
+  //     "A....",
+  //     ".#.#.",
+  //     "....B"
+  //   ))
+  //   val cell = c_a_01.getSmallestCell(board)
 
-    assertEquals(cell.point, c_a_01.Point(0, 0))
-  }
+  //   assertEquals(cell.map(_.point).getOrElse(null), c_a_01.Point(0, 0))
+  // }
 
   test("指定したセルを確定させる") {
     val board = c_a_01.createBoard(Vector(
@@ -113,7 +113,7 @@ class c_a_01Test extends munit.FunSuite {
 
     val cell = c_a_01.getUnfixedSmallestCell(b3)
 
-    assertEquals(cell.point, c_a_01.Point(1, 0))
+    assertEquals(cell.get.point, c_a_01.Point(1, 0))
   }
 
   test("隣りあうCellを取得する 0 0") {
@@ -193,6 +193,34 @@ class c_a_01Test extends munit.FunSuite {
     val lines = Vector(
       "A.#B",
       "####",
+    )
+    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
+
+    assertEquals(c_a_01.start(lines), -1)
+  }
+
+  test("例題4") {
+    val lines = Vector(
+      "A.#....#B",
+      "#.#..#...",
+      "...#..#..",
+      "....#.#..",
+      "....#.#..",
+      "......#..",
+    )
+    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
+
+    assertEquals(c_a_01.start(lines), 21)
+  }
+
+  test("例題4") {
+    val lines = Vector(
+      "A.#....#B",
+      "###..#...",
+      "...#..#..",
+      "....#.#..",
+      "....#.#..",
+      "......#..",
     )
     val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
