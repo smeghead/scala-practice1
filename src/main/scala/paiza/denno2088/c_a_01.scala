@@ -2,18 +2,36 @@ package paiza.denno2088
 
 object c_a_01 {
 
+    // case class Point(x: Int, y: Int)
+    // case class Cell(point: Point, value: Int, fixed: Boolean, isGoal: Boolean)
+    // case class Wall()
+    // case class Board(matrix: Vector[Vector[Cell | Wall]])
     case class Point(x: Int, y: Int)
-    case class Cell(point: Point, value: Int, fixed: Boolean, isGoal: Boolean)
-    case class Wall()
-    case class Board(matrix: Vector[Vector[Cell | Wall]])
+    sealed trait Tile
+    case class Cell(point: Point, value: Int, fixed: Boolean, isGoal: Boolean) extends Tile
+    case class Wall() extends Tile
+    case class Board(matrix: Vector[Vector[Tile]])
+
+    var unfixedPoints = scala.collection.mutable.Map[Point, Int]()
+
+    def updateCacheUnfixedCells(cell: Cell): Cell = {
+        unfixedPoints.update(cell.point, cell.value)
+        cell
+    }
+
+    def removeCacheFixedCells(cell: Cell): Cell = {
+        unfixedPoints.remove(cell.point)
+        cell
+    }
 
     def createBoard(lines: Vector[String]): Board = {
+        unfixedPoints.clear()
         val matrix = lines.zipWithIndex.map {
             case (line, y) => {
                 line.split("").zipWithIndex.map {
                     case (c, x) => {
                         c match {
-                            case "A" => Cell(Point(x, y), 0, false, false)
+                            case "A" => updateCacheUnfixedCells(Cell(Point(x, y), 0, false, false))
                             case "B" => Cell(Point(x, y), Int.MaxValue, false, true)
                             case "." => Cell(Point(x, y), Int.MaxValue, false, false)
                             case "#" => Wall()
@@ -65,10 +83,12 @@ object c_a_01 {
     }
 
     def getUnfixedSmallestCell(b: Board): Option[Cell] = {
-        val cells = getCells(b)
-        val sorted = cells.filter(_.fixed == false).sortBy(c => c.value)
-        val smallest = sorted(0)
-        if (smallest.value == Int.MaxValue) None else Some(smallest)
+        val points = unfixedPoints.toList.sortBy(_._2)
+        if (points.isEmpty) {
+            return None
+        }
+        val p = points(0)._1
+        getCell(b, p)
     }
 
     def display(b: Board): String = {
@@ -82,6 +102,14 @@ object c_a_01 {
                 }
             }).mkString("")
         }).mkString("\n")
+    }
+
+    def updateCellFix(b: Board, p: Point): Board = {
+        updateCell(b, p, c => removeCacheFixedCells(c.copy(fixed = true)))
+    }
+
+    def updateCellValue(b: Board, p: Point, value: Int): Board = {
+        updateCell(b, p, c => updateCacheUnfixedCells(c.copy(value = value)))
     }
 
     def updateCell(b: Board, p: Point, fn: Cell => Cell): Board = {
@@ -122,12 +150,16 @@ object c_a_01 {
             return b
         }
         val smallCell = smallCellOption.get
-        val bFixed = updateCell(b, smallCell.point, c => c.copy(fixed = true))
+        val bFixed = updateCellFix(b, smallCell.point)
 
         val neighborCells = getNeighborhoodCells(bFixed, smallCell.point).filter(c => c.fixed == false)
 
         neighborCells.foldLeft(bFixed) { (acc, c) => {
-            updateCell(acc, c.point, c => if (c.value > smallCell.value + 1) c.copy(value = smallCell.value + 1) else c)
+            if (c.value > smallCell.value + 1) {
+                updateCellValue(acc, c.point, smallCell.value + 1)
+            } else {
+                acc
+            }
         }}
     }
 

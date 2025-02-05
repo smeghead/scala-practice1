@@ -37,7 +37,6 @@ class c_a_01Test extends munit.FunSuite {
     ))
     val b2 = c_a_01.spreadGoal(board)
 
-    println(c_a_01.display(b2))
     assertEquals(c_a_01.getCell(b2, c_a_01.Point(0, 0)), Some(c_a_01.Cell(c_a_01.Point(0, 0), 0, false, false)))
     assertEquals(c_a_01.getCell(b2, c_a_01.Point(1, 0)), Some(c_a_01.Cell(c_a_01.Point(1, 0), Int.MaxValue, false, false)))
     assertEquals(c_a_01.getCell(b2, c_a_01.Point(2, 0)), Some(c_a_01.Cell(c_a_01.Point(2, 0), Int.MaxValue, false, false)))
@@ -67,24 +66,13 @@ class c_a_01Test extends munit.FunSuite {
     assertEquals(c_a_01.display(board), "0- *- *- *- *- \n*- ## *- ## *- \n*- *- *- *- G- ")
   }
 
-  // test("一番小さい値のCellを取得する") {
-  //   val board = c_a_01.createBoard(Vector(
-  //     "A....",
-  //     ".#.#.",
-  //     "....B"
-  //   ))
-  //   val cell = c_a_01.getSmallestCell(board)
-
-  //   assertEquals(cell.map(_.point).getOrElse(null), c_a_01.Point(0, 0))
-  // }
-
   test("指定したセルを確定させる") {
     val board = c_a_01.createBoard(Vector(
       "A....",
       ".#.#.",
       "....B"
     ))
-    val board2 = c_a_01.updateCell(board, c_a_01.Point(0, 0), c => c.copy(fixed = true))
+    val board2 = c_a_01.updateCellFix(board, c_a_01.Point(0, 0))
 
     assertEquals(c_a_01.display(board2), "0+ *- *- *- *- \n*- ## *- ## *- \n*- *- *- *- G- ")
     assertEquals(c_a_01.getCell(board2, c_a_01.Point(0, 0)).map(_.fixed).getOrElse(false), true)
@@ -96,7 +84,7 @@ class c_a_01Test extends munit.FunSuite {
       ".#.#.",
       "....B"
     ))
-    val board2 = c_a_01.updateCell(board, c_a_01.Point(1, 0), c => c.copy(value = 1))
+    val board2 = c_a_01.updateCellValue(board, c_a_01.Point(1, 0), 1)
 
     assertEquals(c_a_01.display(board2), "0- 1- *- *- *- \n*- ## *- ## *- \n*- *- *- *- G- ")
     assertEquals(c_a_01.getCell(board2, c_a_01.Point(1, 0)).map(_.value).getOrElse(-1), 1)
@@ -108,8 +96,8 @@ class c_a_01Test extends munit.FunSuite {
       ".#.#.",
       "....B"
     ))
-    val b2 = c_a_01.updateCell(board, c_a_01.Point(0, 0), c => c.copy(fixed = true))
-    val b3 = c_a_01.updateCell(b2, c_a_01.Point(1, 0), c => c.copy(value = 1))
+    val b2 = c_a_01.updateCellFix(board, c_a_01.Point(0, 0))
+    val b3 = c_a_01.updateCellValue(b2, c_a_01.Point(1, 0), 1)
 
     val cell = c_a_01.getUnfixedSmallestCell(b3)
 
@@ -147,9 +135,9 @@ class c_a_01Test extends munit.FunSuite {
       ".B",
     ))
     val b2 = c_a_01.seek(board)
-    val b3 = c_a_01.updateCell(b2, c_a_01.Point(0, 0), c => c.copy(fixed = true))
-    val b4 = c_a_01.updateCell(b3, c_a_01.Point(1, 0), c => c.copy(fixed = true))
-    val b5 = c_a_01.updateCell(b4, c_a_01.Point(0, 1), c => c.copy(fixed = true))
+    val b3 = c_a_01.updateCellFix(b2, c_a_01.Point(0, 0))
+    val b4 = c_a_01.updateCellFix(b3, c_a_01.Point(1, 0))
+    val b5 = c_a_01.updateCellFix(b4, c_a_01.Point(0, 1))
 
     assertEquals(c_a_01.allFixed(b5), false)
   }
@@ -160,10 +148,10 @@ class c_a_01Test extends munit.FunSuite {
       ".B",
     ))
     val b2 = c_a_01.seek(board)
-    val b3 = c_a_01.updateCell(b2, c_a_01.Point(0, 0), c => c.copy(fixed = true))
-    val b4 = c_a_01.updateCell(b3, c_a_01.Point(1, 0), c => c.copy(fixed = true))
-    val b5 = c_a_01.updateCell(b4, c_a_01.Point(0, 1), c => c.copy(fixed = true))
-    val b6 = c_a_01.updateCell(b5, c_a_01.Point(1, 1), c => c.copy(fixed = true))
+    val b3 = c_a_01.updateCellFix(b2, c_a_01.Point(0, 0))
+    val b4 = c_a_01.updateCellFix(b3, c_a_01.Point(1, 0))
+    val b5 = c_a_01.updateCellFix(b4, c_a_01.Point(0, 1))
+    val b6 = c_a_01.updateCellFix(b5, c_a_01.Point(1, 1))
 
     assertEquals(c_a_01.allFixed(b6), true)
   }
@@ -174,7 +162,6 @@ class c_a_01Test extends munit.FunSuite {
       ".#.#.",
       "....B",
     )
-    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
     assertEquals(c_a_01.start(lines), 2)
   }
@@ -184,7 +171,6 @@ class c_a_01Test extends munit.FunSuite {
       "A..B",
       "####",
     )
-    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
     assertEquals(c_a_01.start(lines), 0)
   }
@@ -194,7 +180,6 @@ class c_a_01Test extends munit.FunSuite {
       "A.#B",
       "####",
     )
-    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
     assertEquals(c_a_01.start(lines), -1)
   }
@@ -208,7 +193,6 @@ class c_a_01Test extends munit.FunSuite {
       "....#.#..",
       "......#..",
     )
-    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
     assertEquals(c_a_01.start(lines), 21)
   }
@@ -222,8 +206,35 @@ class c_a_01Test extends munit.FunSuite {
       "....#.#..",
       "......#..",
     )
-    val b = c_a_01.spreadGoal(c_a_01.createBoard(lines))
 
     assertEquals(c_a_01.start(lines), -1)
   }
+
+    test("例題5") {
+    val lines = Vector(
+      "A.#....#B..................................................................",
+      "#.#..#.....................................................................",
+      "...#..#....................................................................",
+      "....###....................................................................",
+      "....#.#....................................................................",
+      "......#############################################........................",
+      "......#....................................................................",
+      "......#....################################################################",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#################################################################....",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#....................................................................",
+      "......#....................................................................",
+      "...........................................................................",
+    )
+
+    assertEquals(c_a_01.start(lines), 209)
+  }
+
+
 }
