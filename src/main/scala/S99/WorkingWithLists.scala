@@ -15,5 +15,9 @@ object WorkingWithLists {
   // }
 
   // P02 (*) Find the last but one element of a list.
-  def penultimate(xs: List[Int]): Int = ???
+  def penultimate[A](xs: List[A]): A = xs match {
+    case head :: _ :: Nil => head
+    case _ :: tail => penultimate(tail)
+    case _ => throw new NoSuchElementException
+  }
 }
