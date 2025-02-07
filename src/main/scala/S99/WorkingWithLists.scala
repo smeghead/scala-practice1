@@ -20,4 +20,17 @@ object WorkingWithLists {
     case _ :: tail => penultimate(tail)
     case _ => throw new NoSuchElementException
   }
+
+  // P03 (*) Find the Kth element of a list.
+  // def nth[A](n: Int, xs: List[A]): A = xs(n)
+
+  // def nth[A](n: Int, ls: List[A]): A = 
+  //   if (n >= 0) ls(n) 
+  //   else throw new NoSuchElementException
+
+  def nth[A](n: Int, xs: List[A]): A = (n, xs) match {
+    case (0, head :: _) => head
+    case (n, _ :: tail) => nth(n - 1, tail)
+    case _ => throw new NoSuchElementException
+  }
 }
