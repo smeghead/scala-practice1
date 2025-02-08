@@ -56,10 +56,9 @@ object WorkingWithLists {
     if (xs.isEmpty) {
       return true
     }
-    if (xs.head == xs.last) {
-      isPalindrome(xs.slice(1, xs.length - 1))
-    } else {
-      false
+    if (xs.head != xs.last) {
+      return false
     }
+    isPalindrome(xs.slice(1, xs.length - 1))
   }
 }
