@@ -28,4 +28,10 @@ class WorkingWithListsTest extends munit.FunSuite {
       nth(10, List(1, 1, 2, 3, 5, 8))
     }
   }
+
+  test("P04 (*) Find the number of elements of a list.") {
+    assertEquals(6, length(List(1, 1, 2, 3, 5, 8)))
+    assertEquals(0, length(List()))
+    assertEquals(3, length(List("b", "c", "d")))
+  }
 }

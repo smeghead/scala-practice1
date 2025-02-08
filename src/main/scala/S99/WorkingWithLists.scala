@@ -33,4 +33,15 @@ object WorkingWithLists {
     case (n, _ :: tail) => nth(n - 1, tail)
     case _ => throw new NoSuchElementException
   }
+
+  // P04 (*) Find the number of elements of a list.
+  // def length[A](xs: List[A]): Int = {
+  //   def lengthRec[A](xs: List[A], acc: Int): Int = (xs, acc) match {
+  //     case (Nil, acc) => acc
+  //     case (_ :: tail, acc) => lengthRec(tail, acc + 1)
+  //   }
+  //   lengthRec(xs, 0)
+  // }
+
+  def length[A](xs: List[A]): Int = xs.foldLeft(0) { (acc, _) => acc + 1}
 }
