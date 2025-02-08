@@ -44,4 +44,22 @@ object WorkingWithLists {
   // }
 
   def length[A](xs: List[A]): Int = xs.foldLeft(0) { (acc, _) => acc + 1}
+
+  // P05 (*) Reverse a list.
+  // def reverse[A](xs: List[A]): List[A] = xs.reverse
+
+  // def reverse[A](xs: List[A]): List[A] = xs.foldRight(List.empty) { (n, acc) => acc :+ n }
+  def reverse[A](xs: List[A]): List[A] = xs.foldLeft(List.empty) { (acc, n) => n :: acc }
+
+  // P06 (*) Find out whether a list is a palindrome.
+  def isPalindrome[A](xs: List[A]): Boolean = {
+    if (xs.isEmpty) {
+      return true
+    }
+    if (xs.head == xs.last) {
+      isPalindrome(xs.slice(1, xs.length - 1))
+    } else {
+      false
+    }
+  }
 }

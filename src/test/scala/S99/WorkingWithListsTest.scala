@@ -34,4 +34,16 @@ class WorkingWithListsTest extends munit.FunSuite {
     assertEquals(0, length(List()))
     assertEquals(3, length(List("b", "c", "d")))
   }
+
+  test("P05 (*) Reverse a list.") {
+    assertEquals(List(8, 5, 3, 2, 1, 1), reverse(List(1, 1, 2, 3, 5, 8)))
+    assertEquals(List(), reverse(List()))
+    assertEquals(List("d", "c", "b"), reverse(List("b", "c", "d")))
+  }
+
+  test("P06 (*) Find out whether a list is a palindrome.") {
+    assertEquals(true, isPalindrome(List(1, 2, 3, 2, 1)))
+    assertEquals(false, isPalindrome(List(1, 2, 3, 2, 1, 1)))
+    assertEquals(true, isPalindrome(List(1)))
+  }
 }
