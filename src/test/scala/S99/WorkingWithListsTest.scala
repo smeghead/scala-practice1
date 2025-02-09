@@ -46,4 +46,8 @@ class WorkingWithListsTest extends munit.FunSuite {
     assertEquals(false, isPalindrome(List(1, 2, 3, 2, 1, 1)))
     assertEquals(true, isPalindrome(List(1)))
   }
+
+  test("P07 (**) Flatten a nested list structure.") {
+    assertEquals(List(1, 1, 2, 3, 5, 8), flatten(List(List(1, 1), 2, List(3, List(5, 8)))))
+  }
 }

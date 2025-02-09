@@ -61,4 +61,21 @@ object WorkingWithLists {
     }
     isPalindrome(xs.slice(1, xs.length - 1))
   }
+
+  // P07 (**) Flatten a nested list structure.
+  // def flatten(xs: List[Any]): List[Any] = xs match {
+  //   case head :: tail => if (head.isInstanceOf[List[Any]]) {
+  //     flatten(head.asInstanceOf[List[Any]]) ::: flatten(tail)
+  //   } else {
+  //     List(head) ::: flatten(tail)
+  //   }
+  //   case Nil => List.empty
+  // }
+
+  def flatten(xs: List[Any]): List[Any] = xs match {
+    case head :: tail if head.isInstanceOf[List[Any]] => flatten(head.asInstanceOf[List[Any]]) ::: flatten(tail)
+    case head :: tail => List(head) ::: flatten(tail)
+    case Nil => List.empty
+  }
+
 }
