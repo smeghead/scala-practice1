@@ -95,4 +95,21 @@ object WorkingWithLists {
       else acc
     }
   }
+
+  // P09 (**) Pack consecutive duplicates of list elements into sublists.
+  // def pack[A](xs: List[A]): List[Any] = {
+  //   xs.foldLeft(List[List[A]]()) { (acc, e) => 
+  //     if (acc.isEmpty || acc.last.head != e) acc.appended(List[A](e))
+  //     else acc.updated(acc.length - 1, acc.last :+ e)
+  //   }
+  // }
+
+  def pack[A](xs: List[A]): List[List[A]] = {
+    if (xs.isEmpty) List(List())
+    else {
+      val (packed, next) = xs span { _ == xs.head }
+      if (next == Nil) List(packed)
+      else packed :: pack(next)
+    }
+  }
 }
