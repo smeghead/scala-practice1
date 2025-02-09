@@ -84,7 +84,7 @@ object WorkingWithLists {
       case head :: second :: tail if head == second => rec(xs.drop(1), acc)
       case head :: second :: tail => rec(xs.drop(1), acc :+ xs.head)
       case head :: Nil => acc ::: List[A](xs.head)
-      // case Nil => throw new RuntimeException
+      case Nil => throw new RuntimeException
     }
     rec(xs, List[A]())
   }
