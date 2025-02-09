@@ -50,4 +50,8 @@ class WorkingWithListsTest extends munit.FunSuite {
   test("P07 (**) Flatten a nested list structure.") {
     assertEquals(List(1, 1, 2, 3, 5, 8), flatten(List(List(1, 1), 2, List(3, List(5, 8)))))
   }
+
+  test("P08 (**) Eliminate consecutive duplicates of list elements.") {
+    assertEquals(List("a", "b", "c", "a", "d", "e"), compress(List("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e")))
+  }
 }

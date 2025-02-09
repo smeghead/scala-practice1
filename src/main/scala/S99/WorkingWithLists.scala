@@ -78,4 +78,14 @@ object WorkingWithLists {
     case Nil => List.empty
   }
 
+  // P08 (**) Eliminate consecutive duplicates of list elements.
+  def compress[A](xs: List[A]): List[A] = {
+    def rec[A](xs: List[A], acc: List[A]): List[A] = xs match {
+      case head :: second :: tail if head == second => rec(xs.drop(1), acc)
+      case head :: second :: tail => rec(xs.drop(1), acc :+ xs.head)
+      case head :: Nil => acc ::: List[A](xs.head)
+      // case Nil => throw new RuntimeException
+    }
+    rec(xs, List[A]())
+  }
 }
