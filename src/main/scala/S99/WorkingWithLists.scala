@@ -112,4 +112,15 @@ object WorkingWithLists {
       else packed :: pack(next)
     }
   }
+
+  // P10 (*) Run-length encoding of a list.
+  def encode[A](xs: List[A]): List[(Int, A)] = {
+    if (xs.isEmpty) List()
+    else {
+      val (packed, next) = xs span { _ == xs.head }
+      val encoded = (packed.length, packed.head)
+      if (next == Nil) List(encoded)
+      else encoded :: encode(next)
+    }
+  }
 }
