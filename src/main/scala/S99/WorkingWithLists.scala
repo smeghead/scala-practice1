@@ -123,4 +123,7 @@ object WorkingWithLists {
       else encoded :: encode(next)
     }
   }
+
+  // P11 (*) Modified run-length encoding.
+  def encodeModified[A](xs: List[A]): List[A | (Int, A)] = encode(xs) map { (e: (Int, A)) => if (e._1 == 1) e._2 else e }
 }
