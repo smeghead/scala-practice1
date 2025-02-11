@@ -135,4 +135,7 @@ object WorkingWithLists {
 
   // P14 (*) Duplicate the elements of a list.
   def duplicate[A](xs: List[A]): List[A] = xs flatMap { List.fill(2)(_) }
+
+  // P15 (**) Duplicate the elements of a list a given number of times.
+  def duplicateN[A](n: Int, xs: List[A]): List[A] = xs flatMap { List.fill(n)(_) }
 }

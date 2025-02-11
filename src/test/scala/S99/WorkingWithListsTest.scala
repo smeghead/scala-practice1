@@ -96,4 +96,13 @@ class WorkingWithListsTest extends munit.FunSuite {
       duplicate(List("a", "b", "c", "c", "d"))
     )
   }
+
+  
+  test("P15 (**) Duplicate the elements of a list a given number of times.") {
+    assertEquals(
+      List("a", "a", "a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "d", "d", "d"),
+      duplicateN(3, List("a", "b", "c", "c", "d"))
+    )
+  }
+
 }
