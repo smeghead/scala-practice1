@@ -138,4 +138,7 @@ object WorkingWithLists {
 
   // P15 (**) Duplicate the elements of a list a given number of times.
   def duplicateN[A](n: Int, xs: List[A]): List[A] = xs flatMap { List.fill(n)(_) }
+
+  // P16 (**) Drop every N Nth element from a list.
+  def drop[A](n: Int, xs: List[A]): List[A] = xs.zipWithIndex.filter { (e, i) => (i + 1) % n != 0 } map { _._1 }
 }

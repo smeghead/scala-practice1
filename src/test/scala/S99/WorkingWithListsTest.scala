@@ -96,7 +96,6 @@ class WorkingWithListsTest extends munit.FunSuite {
       duplicate(List("a", "b", "c", "c", "d"))
     )
   }
-
   
   test("P15 (**) Duplicate the elements of a list a given number of times.") {
     assertEquals(
@@ -105,4 +104,10 @@ class WorkingWithListsTest extends munit.FunSuite {
     )
   }
 
+  test("P16 (**) Drop every N Nth element from a list.") {
+    assertEquals(
+      List("a", "b", "d", "e", "g", "h", "j", "k"),
+      drop(3, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+  }
 }
