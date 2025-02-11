@@ -126,4 +126,7 @@ object WorkingWithLists {
 
   // P11 (*) Modified run-length encoding.
   def encodeModified[A](xs: List[A]): List[A | (Int, A)] = encode(xs) map { (e: (Int, A)) => if (e._1 == 1) e._2 else e }
+
+  // P12 (**) Decode a run-length encoded list.
+  def decode[A](xs: List[(Int, A)]): List[A] = xs flatMap { (n, e) => List.fill(n)(e) }
 }

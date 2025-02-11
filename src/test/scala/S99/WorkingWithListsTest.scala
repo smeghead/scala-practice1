@@ -75,4 +75,11 @@ class WorkingWithListsTest extends munit.FunSuite {
       encodeModified(List("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"))
     )
   }
+
+  test("P12 (**) Decode a run-length encoded list.") {
+    assertEquals(
+      List("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"),
+      decode(List((4, "a"), (1, "b"), (2, "c"), (2, "a"), (1, "d"), (4, "e")))
+    )
+  }
 }
