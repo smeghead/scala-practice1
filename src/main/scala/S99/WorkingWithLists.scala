@@ -129,4 +129,10 @@ object WorkingWithLists {
 
   // P12 (**) Decode a run-length encoded list.
   def decode[A](xs: List[(Int, A)]): List[A] = xs flatMap { (n, e) => List.fill(n)(e) }
+
+  // P13 (**) Run-length encoding of a list (direct solution).
+  def encodeDirect = encode // 問題を良く読まずに、既にP10でダイレクトにエンコードしたバージョンを書いていた。
+
+  // P14 (*) Duplicate the elements of a list.
+  def duplicate[A](xs: List[A]): List[A] = xs flatMap { List.fill(2)(_) }
 }

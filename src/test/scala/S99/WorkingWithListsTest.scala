@@ -82,4 +82,18 @@ class WorkingWithListsTest extends munit.FunSuite {
       decode(List((4, "a"), (1, "b"), (2, "c"), (2, "a"), (1, "d"), (4, "e")))
     )
   }
+
+  test("P13 (**) Run-length encoding of a list (direct solution).") {
+    assertEquals(
+      List((4,"a"), (1,"b"), (2,"c"), (2,"a"), (1,"d"), (4,"e")),
+       encodeDirect(List("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"))
+    )
+  }
+
+  test("P14 (*) Duplicate the elements of a list.") {
+    assertEquals(
+      List("a", "a", "b", "b", "c", "c", "c", "c", "d", "d"),
+      duplicate(List("a", "b", "c", "c", "d"))
+    )
+  }
 }
