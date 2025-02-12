@@ -156,4 +156,15 @@ object WorkingWithLists {
   // P18 (**) Extract a slice from a list.
   // def slice[A](start: Int, end: Int, xs: List[A]): List[A] = xs.slice(start, end)
   def slice[A](start: Int, end: Int, xs: List[A]): List[A] = xs.take(end).drop(start)
+
+  // P19 (**) Rotate a list N N places to the left.
+  // def rotate[A](n: Int, xs: List[A]): List[A] = n match {
+  //   case n if n > -1 => xs.drop(n) ::: xs.take(n)
+  //   case n => rotate(n * -1, xs.reverse).reverse
+  // }
+  def rotate[A](n: Int, xs: List[A]): List[A] = {
+    val nBounded = if (xs.isEmpty) 0 else n % xs.length
+    if (nBounded < 0) rotate(nBounded + xs.length, xs)
+    else (xs drop nBounded) ::: (xs take nBounded)
+  }
 }

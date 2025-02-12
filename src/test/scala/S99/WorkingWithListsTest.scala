@@ -128,4 +128,19 @@ class WorkingWithListsTest extends munit.FunSuite {
       slice(3, 7, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
     )
   }
+
+  test("P19 (**) Rotate a list N N places to the left.") {
+    assertEquals(
+      List("d", "e", "f", "g", "h", "i", "j", "k", "a", "b", "c"),
+      rotate(3, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+    assertEquals(
+      List("j", "k", "a", "b", "c", "d", "e", "f", "g", "h", "i"),
+      rotate(-2, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+    assertEquals(
+      List("d", "e", "f", "g", "h", "i", "j", "k", "a", "b", "c"),
+      rotate(14, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+  }
 }
