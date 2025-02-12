@@ -141,4 +141,19 @@ object WorkingWithLists {
 
   // P16 (**) Drop every N Nth element from a list.
   def drop[A](n: Int, xs: List[A]): List[A] = xs.zipWithIndex.filter { (e, i) => (i + 1) % n != 0 } map { _._1 }
+
+  // P17 (*) Split a list into two parts.
+  // def split[A](n: Int, xs: List[A]): (List[A], List[A]) = {
+  //   def rec[A](n: Int, xs: List[A], acc: List[A]): (List[A], List[A]) = (n, xs) match {
+  //     case (0, xs) => (acc, xs)
+  //     case (_, Nil) => (acc, xs)
+  //     case (n, xs) => rec(n - 1, xs.tail, acc :+ xs.head)
+  //   }
+  //   rec(n, xs, List.empty)
+  // }
+  def split[A](n: Int, xs: List[A]): (List[A], List[A]) = (xs.take(n), xs.drop(n))
+
+  // P18 (**) Extract a slice from a list.
+  // def slice[A](start: Int, end: Int, xs: List[A]): List[A] = xs.slice(start, end)
+  def slice[A](start: Int, end: Int, xs: List[A]): List[A] = xs.take(end).drop(start)
 }

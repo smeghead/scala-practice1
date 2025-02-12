@@ -110,4 +110,22 @@ class WorkingWithListsTest extends munit.FunSuite {
       drop(3, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
     )
   }
+
+  test("P17 (*) Split a list into two parts.") {
+    assertEquals(
+      (List("a", "b", "c"),List("d", "e", "f", "g", "h", "i", "j", "k")),
+      split(3, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+    assertEquals(
+      (List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), List()),
+      split(100, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+  }
+
+  test("P18 (**) Extract a slice from a list.") {
+    assertEquals(
+      List("d", "e", "f", "g"),
+      slice(3, 7, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
+    )
+  }
 }
