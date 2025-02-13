@@ -167,4 +167,7 @@ object WorkingWithLists {
     if (nBounded < 0) rotate(nBounded + xs.length, xs)
     else (xs drop nBounded) ::: (xs take nBounded)
   }
+
+  // P20 (*) Remove the K Kth element from a list.
+  def removeAt[A](n: Int, xs: List[A]): (List[A], A) = (xs.take(n) ::: xs.drop(n + 1), xs(n))
 }

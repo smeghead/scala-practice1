@@ -143,4 +143,11 @@ class WorkingWithListsTest extends munit.FunSuite {
       rotate(14, List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"))
     )
   }
+
+  test("P20 (*) Remove the K Kth element from a list.") {
+    assertEquals(
+      (List("a", "c", "d"),"b"),
+      removeAt(1, List("a", "b", "c", "d"))
+    )
+  }
 }
