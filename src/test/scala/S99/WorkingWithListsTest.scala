@@ -150,4 +150,11 @@ class WorkingWithListsTest extends munit.FunSuite {
       removeAt(1, List("a", "b", "c", "d"))
     )
   }
+
+  test("P21 (*) Insert an element at a given position into a list.") {
+    assertEquals(
+      List("a", "new", "b", "c", "d"),
+      insertAt("new", 1, List("a", "b", "c", "d"))
+    )
+  }
 }

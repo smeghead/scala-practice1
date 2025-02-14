@@ -170,4 +170,18 @@ object WorkingWithLists {
 
   // P20 (*) Remove the K Kth element from a list.
   def removeAt[A](n: Int, xs: List[A]): (List[A], A) = (xs.take(n) ::: xs.drop(n + 1), xs(n))
+
+  // P21 (*) Insert an element at a given position into a list.
+  // def insertAt[A](element: A, n: Int, xs: List[A]): List[A] = {
+  //   xs.splitAt(n) match {
+  //     case (Nil, suffix) => List(element) ::: suffix
+  //     case (prefix, Nil) => prefix :+ element
+  //     case (prefix, suffix) => prefix ::: List(element) ::: suffix
+  //   }
+  // }
+  def insertAt[A](element: A, n: Int, xs: List[A]): List[A] = {
+    xs.splitAt(n) match {
+      case (prefix, suffix) => prefix ::: element :: suffix
+    }
+  }
 }
