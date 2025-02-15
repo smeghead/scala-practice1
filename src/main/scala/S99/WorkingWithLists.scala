@@ -184,4 +184,14 @@ object WorkingWithLists {
       case (prefix, suffix) => prefix ::: element :: suffix
     }
   }
+
+  // P22 (*) Create a list containing all integers within a given range.
+  // def range(start: Int, end: Int): List[Int] = (start, end) match {
+  //   case (s, e) if s > e => throw new RuntimeException
+  //   case (_, _) => (start to end).toList
+  // }
+  def range(start: Int, end: Int): List[Int] = {
+    if (start > end) Nil
+    else start :: range(start + 1, end)
+  }
 }

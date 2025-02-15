@@ -157,4 +157,15 @@ class WorkingWithListsTest extends munit.FunSuite {
       insertAt("new", 1, List("a", "b", "c", "d"))
     )
   }
+
+  test("P22 (*) Create a list containing all integers within a given range.") {
+    assertEquals(
+      List(4, 5, 6, 7, 8, 9),
+      range(4, 9)
+    )
+    assertEquals(
+      List(4),
+      range(4, 4)
+    )
+  }
 }
