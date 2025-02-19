@@ -1,5 +1,7 @@
 package S99
 
+import scala.util.Random
+
 object WorkingWithLists {
   // P01  (*) Find the last element of a list.
   def last[A](xs: List[A]): A = xs match {
@@ -193,5 +195,26 @@ object WorkingWithLists {
   def range(start: Int, end: Int): List[Int] = {
     if (start > end) Nil
     else start :: range(start + 1, end)
+  }
+
+  // P23 (**) Extract a given number of randomly selected elements from a list.
+  // def randomSelect[A](n: Int, xs: List[A]): List[A] = {
+  //   val random = new Random()
+  //   def rec[A](n: Int, xs: List[A], acc: List[A]): List[A] = {
+  //     if (n <= acc.length) {
+  //       return acc
+  //     }
+  //     val k = random.between(0, xs.length - 1)
+  //     val (removed, pickup)  = removeAt(n, xs)
+  //     rec(n, removed, acc :+ pickup)
+  //   }
+  //   rec(n, xs, List())
+  // }
+  def randomSelect[A](n: Int, xs: List[A]): List[A] = {
+    if (n <= 0) Nil
+    else {
+      val (rest, e) = removeAt((new util.Random).nextInt(xs.length), xs)
+      e :: randomSelect(n - 1, rest)
+    }
   }
 }

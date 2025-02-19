@@ -168,4 +168,11 @@ class WorkingWithListsTest extends munit.FunSuite {
       range(4, 4)
     )
   }
+
+  test("P23 (**) Extract a given number of randomly selected elements from a list.") {
+    assertEquals(
+      3,
+      randomSelect(3, List("a", "b", "c", "d", "f", "g", "h")).length
+    )
+  }
 }
