@@ -217,4 +217,17 @@ object WorkingWithLists {
       e :: randomSelect(n - 1, rest)
     }
   }
+
+  // P24 (*) Lotto: Draw N different random numbers from the set 1..M.
+  // def lotto(n: Int, max: Int): List[Int] = {
+  //   def rec(i: Int, xs: List[Int]): List[Int] = {
+  //     if (i <= 0) Nil
+  //     else {
+  //       val (rest, e) = removeAt[Int]((new util.Random).nextInt(xs.length), xs)
+  //       e :: rec(i - 1, rest)
+  //     }
+  //   }
+  //   rec(n, (1 to max).toList)
+  // }
+  def lotto(n: Int, max: Int): List[Int] = (new util.Random).shuffle((1 to max).toList).take(n)
 }

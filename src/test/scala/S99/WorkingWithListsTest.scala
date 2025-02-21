@@ -175,4 +175,13 @@ class WorkingWithListsTest extends munit.FunSuite {
       randomSelect(3, List("a", "b", "c", "d", "f", "g", "h")).length
     )
   }
+
+  test("P24 (*) Lotto: Draw N different random numbers from the set 1..M.") {
+    val result = lotto(6, 49)
+    assertEquals(6, result.toSet.size)
+    result map { (n: Int) =>
+      assert(n > 0)
+      assert(n <= 49)
+    }
+  }
 }
