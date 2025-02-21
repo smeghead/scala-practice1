@@ -230,4 +230,7 @@ object WorkingWithLists {
   //   rec(n, (1 to max).toList)
   // }
   def lotto(n: Int, max: Int): List[Int] = (new util.Random).shuffle((1 to max).toList).take(n)
+
+  // P25 (*) Generate a random permutation of the elements of a list.
+  def randomPermute[A](xs: List[A]): List[A] = (new util.Random).shuffle(xs)
 }

@@ -184,4 +184,13 @@ class WorkingWithListsTest extends munit.FunSuite {
       assert(n <= 49)
     }
   }
+
+  test("P25 (*) Generate a random permutation of the elements of a list.") {
+    val original = List("a", "b", "c", "d", "e", "f")
+    val result = randomPermute(original)
+    assertEquals(6, result.toSet.size)
+    result map { (s: String) =>
+      assert(original.contains(s))
+    }
+  }
 }
