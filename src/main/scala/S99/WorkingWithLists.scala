@@ -233,4 +233,20 @@ object WorkingWithLists {
 
   // P25 (*) Generate a random permutation of the elements of a list.
   def randomPermute[A](xs: List[A]): List[A] = (new util.Random).shuffle(xs)
+
+  // P26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list.
+  // def combinations[A](n: Int, xs: List[A]): List[List[A]] = xs.combinations(n).toList
+  def flatMapSublists[A, B](xs: List[A])(f: (List[A]) => List[B]): List[B] = {
+    xs match {
+      case Nil => Nil
+      case sublists@(_ :: tail) => f(sublists) ::: flatMapSublists(tail)(f)
+    }
+  }
+  
+  def combinations[A](n: Int, xs: List[A]): List[List[A]] = {
+    if (n == 0) List(Nil)
+    else flatMapSublists(xs) { sl =>
+      combinations(n - 1, sl.tail) map {sl.head :: _}
+    }
+  }
 }

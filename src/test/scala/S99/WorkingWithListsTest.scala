@@ -193,4 +193,11 @@ class WorkingWithListsTest extends munit.FunSuite {
       assert(original.contains(s))
     }
   }
+
+  test("P26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list.") {
+    assertEquals(
+      List(List("a", "b"), List("a", "c"), List("b", "c")),
+      combinations(2, List("a", "b", "c"))
+    )
+  }
 }
