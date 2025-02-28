@@ -200,4 +200,16 @@ class WorkingWithListsTest extends munit.FunSuite {
       combinations(2, List("a", "b", "c"))
     )
   }
+
+  test("P27 (**) Group the elements of a set into disjoint subsets.") {
+    val result = group3(List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
+    assertEquals(
+      result.length,
+      1260
+    )
+    assertEquals(
+      List(List("Aldo", "Beat"), List("Carla", "David", "Evi"), List("Flip", "Gary", "Hugo", "Ida")),
+      result(0)
+    )
+  }
 }

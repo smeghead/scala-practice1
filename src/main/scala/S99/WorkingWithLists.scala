@@ -242,11 +242,20 @@ object WorkingWithLists {
       case sublists@(_ :: tail) => f(sublists) ::: flatMapSublists(tail)(f)
     }
   }
-  
+
   def combinations[A](n: Int, xs: List[A]): List[List[A]] = {
     if (n == 0) List(Nil)
     else flatMapSublists(xs) { sl =>
       combinations(n - 1, sl.tail) map {sl.head :: _}
     }
+  }
+
+  // P27 (**) Group the elements of a set into disjoint subsets.
+  def group3[A](xs: List[A]): List[List[List[A]]] = {
+    for {
+      a <- combinations(2, xs)
+      noA = xs.diff(a)
+      b <- combinations(3, noA)
+    } yield List(a, b, noA.diff(b))
   }
 }
