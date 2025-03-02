@@ -258,4 +258,18 @@ object WorkingWithLists {
       b <- combinations(3, noA)
     } yield List(a, b, noA.diff(b))
   }
+
+  // P28 (**) Sorting a list of lists according to length of sublists.
+  def lsort[A](xs: List[List[A]]): List[List[A]] = xs.sortBy(_.length)
+
+  def lsortFreq[A](xs: List[List[A]]): List[List[A]] = {
+    val lengthCounts = xs.map(_.length).foldLeft(Map.empty[Int, Int]) { (acc: Map[Int, Int], len: Int) =>
+      acc.get(len) match {
+        case Some(value) => acc + (len -> (value + 1))
+        case None => acc + (len -> 1)
+      }
+    }
+    val orders = collection.mutable.LinkedHashMap(lengthCounts.toList.sortBy(_._2 * -1): _*).keys.toList
+    xs.sortBy(x => orders.indexOf(x.length) * -1)
+  }
 }

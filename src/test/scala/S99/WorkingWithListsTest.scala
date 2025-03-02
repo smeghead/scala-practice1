@@ -212,4 +212,15 @@ class WorkingWithListsTest extends munit.FunSuite {
       result(0)
     )
   }
+
+  test("P28 (**) Sorting a list of lists according to length of sublists.") {
+    assertEquals(
+      List(List("o"), List("d", "e"), List("d", "e"), List("m", "n"), List("a", "b", "c"), List("f", "g", "h"), List("i", "j", "k", "l")),
+      lsort(List(List("a", "b", "c"), List("d", "e"), List("f", "g", "h"), List("d", "e"), List("i", "j", "k", "l"), List("m", "n"), List("o")))
+    )
+    assertEquals(
+      List(List("o"), List("i", "j", "k", "l"), List("a", "b", "c"), List("f", "g", "h"), List("d", "e"), List("d", "e"), List("m", "n")),
+      lsortFreq(List(List("a", "b", "c"), List("d", "e"), List("f", "g", "h"), List("d", "e"), List("i", "j", "k", "l"), List("m", "n"), List("o")))
+    )
+  }
 }
