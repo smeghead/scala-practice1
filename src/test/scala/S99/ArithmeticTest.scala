@@ -12,4 +12,15 @@ class ArithmeticTest extends munit.FunSuite {
     assertEquals(true, 7.isPrime)
     assertEquals(false, 8.isPrime)
   }
+
+  test("P32 (**) Determine the greatest common divisor of two positive integer numbers.") {
+    assertEquals(
+      3,
+      gcd(6, 9)
+    )
+    assertEquals(
+      9,
+      gcd(36, 63)
+    )
+  }
 }
