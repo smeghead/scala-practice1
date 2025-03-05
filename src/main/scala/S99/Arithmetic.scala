@@ -20,4 +20,15 @@ object Arithmetic {
   //   }
   // }
   def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+
+  // P33 (*) Determine whether two positive integer numbers are coprime.
+  extension (n: Int) {
+    def isCoprimeTo(other: Int): Boolean = gcd(n, other) == 1
+  }
+
+  // P34 (**) Calculate Euler’s totient function ϕ(m).
+  extension (n: Int) {
+    // def totient: Int = (1 to n).foldLeft(0) { (acc, e) => acc + (if (e.isCoprimeTo(n)) 1 else 0) }
+    def totient: Int = (1 to n).filter(n.isCoprimeTo(_)).length
+  }
 }

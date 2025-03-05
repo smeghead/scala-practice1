@@ -23,4 +23,19 @@ class ArithmeticTest extends munit.FunSuite {
       gcd(36, 63)
     )
   }
+
+  test("P33 (*) Determine whether two positive integer numbers are coprime.") {
+    assertEquals(
+      true,
+      35.isCoprimeTo(64)
+    )
+    assertEquals(
+      false,
+      32.isCoprimeTo(64)
+    )
+  }
+
+  test("P34 (**) Calculate Euler’s totient function ϕ(m).") {
+    assertEquals(4, 10.totient)
+  }
 }
