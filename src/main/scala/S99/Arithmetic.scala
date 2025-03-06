@@ -33,15 +33,12 @@ object Arithmetic {
   }
 
   // P35 (**) Determine the prime factors of a given positive integer. 
-  var primes = LazyList.cons(2, LazyList.from(3, 1).filter(_.isPrime))
+  var primes = LazyList.cons(2, LazyList.from(3, 2).filter(_.isPrime))
   extension (n: Int) {
-    def primeFactors: List[Int] = n match {
-      case 1 => Nil
-      case _ => {
-        primes.find(n % _ == 0) match {
-          case Some(x) => x :: (n / x).primeFactors
-          case None => throw new NoSuchElementException
-        }
+    def primeFactors: List[Int] = if (n == 1) Nil else {
+      primes.find(n % _ == 0) match {
+        case Some(x) => x :: (n / x).primeFactors
+        case None => throw new NoSuchElementException
       }
     }
   }
