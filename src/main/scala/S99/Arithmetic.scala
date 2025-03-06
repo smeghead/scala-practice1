@@ -31,4 +31,36 @@ object Arithmetic {
     // def totient: Int = (1 to n).foldLeft(0) { (acc, e) => acc + (if (e.isCoprimeTo(n)) 1 else 0) }
     def totient: Int = (1 to n).filter(n.isCoprimeTo(_)).length
   }
+
+  // P35 (**) Determine the prime factors of a given positive integer. 
+  var primes = LazyList.cons(2, LazyList.from(3, 1).filter(_.isPrime))
+  extension (n: Int) {
+    def primeFactors: List[Int] = n match {
+      case 1 => Nil
+      case _ => {
+        primes.find(n % _ == 0) match {
+          case Some(x) => x :: (n / x).primeFactors
+          case None => throw new NoSuchElementException
+        }
+      }
+    }
+  }
+
+  // // P36 (**) Determine the prime factors of a given positive integer (2).
+  // extension (n: Int) {
+  //   def primeFactorMultiplicity: List((Int, Int)) = {
+  //     def encode[A](xs: List[A]): List((Int, Int)) = {
+  //       if (xs.isEmpty) List()
+  //       else {
+  //         val (packed, tail) = xs span { xs.head == _ }
+  //         val encoded = (packed.head, packed.length)
+  //         tail match {
+  //           case Nil => List(encoded)
+  //           case _ => encoded :: encode(tail)
+  //         }
+  //       }
+  //     }
+  //     encode(n.primeFactors)
+  //   }
+  // }
 }

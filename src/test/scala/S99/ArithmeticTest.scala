@@ -38,4 +38,18 @@ class ArithmeticTest extends munit.FunSuite {
   test("P34 (**) Calculate Euler’s totient function ϕ(m).") {
     assertEquals(4, 10.totient)
   }
+
+  test("P35 (**) Determine the prime factors of a given positive integer. ") {
+    assertEquals(
+      List(3, 3, 5, 7),
+      315.primeFactors
+    )
+  }
+
+  // test("P36 (**) Determine the prime factors of a given positive integer (2).") {
+  //   assertEquals(
+  //     List((3,2), (5,1), (7,1)),
+  //     315.primeFactorMultiplicity
+  //   )
+  // }
 }
