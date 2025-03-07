@@ -46,10 +46,10 @@ class ArithmeticTest extends munit.FunSuite {
     )
   }
 
-  // test("P36 (**) Determine the prime factors of a given positive integer (2).") {
-  //   assertEquals(
-  //     List((3,2), (5,1), (7,1)),
-  //     315.primeFactorMultiplicity
-  //   )
-  // }
+  test("P36 (**) Determine the prime factors of a given positive integer (2).") {
+    assertEquals(
+      List((3,2), (5,1), (7,1)),
+      315.primeFactorMultiplicity
+    )
+  }
 }

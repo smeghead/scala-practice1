@@ -43,21 +43,21 @@ object Arithmetic {
     }
   }
 
-  // // P36 (**) Determine the prime factors of a given positive integer (2).
-  // extension (n: Int) {
-  //   def primeFactorMultiplicity: List((Int, Int)) = {
-  //     def encode[A](xs: List[A]): List((Int, Int)) = {
-  //       if (xs.isEmpty) List()
-  //       else {
-  //         val (packed, tail) = xs span { xs.head == _ }
-  //         val encoded = (packed.head, packed.length)
-  //         tail match {
-  //           case Nil => List(encoded)
-  //           case _ => encoded :: encode(tail)
-  //         }
-  //       }
-  //     }
-  //     encode(n.primeFactors)
-  //   }
-  // }
+  // // P36 (**) Determine the prime factors of a given posit{ive integer (2).
+  def encode(xs: List[Int]): List[(Int, Int)] = {
+    if (xs.isEmpty) List()
+    else {
+      val (packed, tail) = xs span { xs.head == _ }
+      val encoded = (packed.head, packed.length)
+      tail match {
+        case Nil => List(encoded)
+        case _ => encoded :: encode(tail)
+      }
+    }
+  }
+  extension (n: Int) {
+    def primeFactorMultiplicity: List[(Int, Int)] = {
+      encode(n.primeFactors sortWith { _ < _ })
+    }
+  }
 }
