@@ -60,4 +60,15 @@ object Arithmetic {
       encode(n.primeFactors sortWith { _ < _ })
     }
   }
+
+  // P37 (**) Calculate Euler’s totient function ϕ(m) (improved).
+  def totientImproved(n: Int): Int = {
+    // n.primeFactorMultiplicity.map { e =>
+    //   (e._1 - 1) * math.pow(e._1, e._2 - 1)
+    // }.product.toInt
+
+    n.primeFactorMultiplicity.map { _ match {
+      case (p, m) => (p - 1) * math.pow(p, m - 1)
+    }}.product.toInt
+  }
 }

@@ -52,4 +52,15 @@ class ArithmeticTest extends munit.FunSuite {
       315.primeFactorMultiplicity
     )
   }
+
+  test("P37 (**) Calculate Euler’s totient function ϕ(m) (improved).") {
+    assertEquals(
+      6,
+      totientImproved(9)
+    )
+    assertEquals(
+      4,
+      totientImproved(10)
+    )
+  }
 }
