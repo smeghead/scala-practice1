@@ -63,4 +63,18 @@ class ArithmeticTest extends munit.FunSuite {
       totientImproved(10)
     )
   }
+
+  test("P38 (*) Compare the two methods of calculating Euler’s totient function.") {
+    assertEquals(
+      totient(10090),
+      totientImproved(10090)
+    )
+  }
+
+  test("P39 (*) A list of prime numbers.") {
+    assertEquals(
+      List(7, 11, 13, 17, 19, 23, 29, 31),
+      listPrimesinRange(7 to 31)
+    )
+  }
 }

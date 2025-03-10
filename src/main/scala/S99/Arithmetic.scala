@@ -71,4 +71,10 @@ object Arithmetic {
       case (p, m) => (p - 1) * math.pow(p, m - 1)
     }}.product.toInt
   }
+
+  // P39 (*) A list of prime numbers.
+  // def listPrimesinRange(xs: IndexedSeq[Int]): List[Int] = xs.filter(_.isPrime).toList
+  def listPrimesinRange(r: Range): List[Int] = {
+    primes.dropWhile(_ < r.start).takeWhile(_ <= r.end).toList
+  }
 }
