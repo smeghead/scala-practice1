@@ -77,4 +77,15 @@ class ArithmeticTest extends munit.FunSuite {
       listPrimesinRange(7 to 31)
     )
   }
+
+  test("P40 (**) Goldbach’s conjecture.") {
+    assertEquals(
+      (5,23),
+      28.goldbach
+    )
+    assertEquals(
+      (5,7),
+      12.goldbach
+    )
+  }
 }

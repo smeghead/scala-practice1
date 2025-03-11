@@ -77,4 +77,34 @@ object Arithmetic {
   def listPrimesinRange(r: Range): List[Int] = {
     primes.dropWhile(_ < r.start).takeWhile(_ <= r.end).toList
   }
+
+  // P40 (**) Goldbach’s conjecture.
+  // extension (n: Int) {
+    // def goldbach: (Int, Int) = {
+    //   def rec(ax: LazyList[Int], bx: LazyList[Int]): Option[(Int, Int)] = {
+    //     (ax.head, bx.head) match {
+    //       case (a, b) if a + b == n => Some((a, b))
+    //       case (a, b) if a + b > n => None
+    //       case (a, b) => {
+    //         rec(ax, bx.tail) match {
+    //           case Some((aa, bb)) => Some((aa, bb))
+    //           case None => rec(ax.tail, bx)
+    //         }
+    //       }
+    //     }
+    //   }
+    //   rec(primes, primes) match {
+    //     case Some((aaa, bbb)) => (aaa, bbb)
+    //     case None => throw new NoSuchElementException
+    //   }
+    // }
+  // }
+  extension (start: Int) {
+    def goldbach: (Int, Int) = {
+      primes takeWhile { _ < start } find { p => (start - p).isPrime } match {
+        case None => throw new IllegalArgumentException
+        case Some(p1) => (p1, start - p1)
+      }
+    }
+  }
 }
