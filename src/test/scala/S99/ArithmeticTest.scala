@@ -88,4 +88,18 @@ class ArithmeticTest extends munit.FunSuite {
       12.goldbach
     )
   }
+
+  test("P41 (**) A list of Goldbach compositions.") {
+    assertEquals(
+      List(
+        "10 = 3 + 7",
+        "12 = 5 + 7",
+        "14 = 3 + 11",
+        "16 = 3 + 13",
+        "18 = 5 + 13",
+        "20 = 3 + 17",
+      ),
+      getGoldbachList(9 to 20)
+    )
+  }
 }

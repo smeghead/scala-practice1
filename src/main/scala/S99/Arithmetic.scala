@@ -107,4 +107,13 @@ object Arithmetic {
       }
     }
   }
+
+  // P41 (**) A list of Goldbach compositions.
+  def getGoldbachList(r: Range): List[String] = {
+    r.filter(_ % 2 == 0).map(n => {
+      n.goldbach match {
+        case (a, b) => "%d = %d + %d".format(n, a, b)
+      }
+    }).toList
+  }
 }
