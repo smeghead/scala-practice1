@@ -1,0 +1,18 @@
+package S99
+
+object LogicAndCodes {
+  // P46 (**) Truth tables for logical expressions.
+  def and(a: Boolean, b: Boolean): Boolean = a && b
+  def or(a: Boolean, b: Boolean): Boolean = a || b
+  def nand(a: Boolean, b: Boolean): Boolean = !(a && b)
+  def nor(a: Boolean, b: Boolean): Boolean = !(a || b)
+  def xor(a: Boolean, b: Boolean): Boolean = a != b
+
+  def table2(f: (a: Boolean, b: Boolean) => Boolean): List[String] = {
+    val table = for {
+      x <- List(true, false)
+      y <- List(true, false)
+    } yield "%-6s%-6s%s".format(x, y, f(x, y))
+    List("A     B     result") ++ table
+  }
+}
