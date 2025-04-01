@@ -35,4 +35,18 @@ class LogicAndCodesTest extends munit.FunSuite {
     )
   }
 
+  test("P49 (**) Gray code.") {
+    assertEquals(
+      List("0", "1"),
+      gray(1)
+    )
+    assertEquals(
+      List("00", "01", "11", "10"),
+      gray(2)
+    )
+    assertEquals(
+      List("000", "001", "011", "010", "110", "111", "101", "100"),
+      gray(3)
+    )
+  }
 }
