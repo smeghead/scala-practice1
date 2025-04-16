@@ -49,4 +49,11 @@ class LogicAndCodesTest extends munit.FunSuite {
       gray(3)
     )
   }
+
+  test("P50 (***) Huffman code.") {
+    assertEquals(
+      List(("a","0"), ("b","101"), ("c","100"), ("d","111"), ("e","1101"), ("f","1100")),
+      huffman(List(("a", 45), ("b", 13), ("c", 12), ("d", 16), ("e", 9), ("f", 5)))
+    )
+  }
 }
